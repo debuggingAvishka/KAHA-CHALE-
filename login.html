@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login | Kaha Chalen?</title>
+
+    <!-- Main shared styles -->
+    <link rel="stylesheet" href="quiz.css" />
+  </head>
+
+  <body>
+    <!-- NAVBAR -->
+    <header class="navbar">
+      <div class="nav-logo">Kaha Chalen?</div>
+
+      <nav class="nav-links">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="quiz.html" class="nav-link">Quiz</a>
+        <a href="login.html" class="nav-link active">Login</a>
+      </nav>
+    </header>
+
+    <!-- MAIN CONTENT -->
+    <main class="main-layout" style="justify-content: center">
+      <div class="column column-middle" style="max-width: 420px">
+        <div class="card quiz-card">
+          <h2 class="section-title">Login</h2>
+          <p class="section-subtitle">
+            Log in to suggest places and save favourites
+          </p>
+
+          <!-- LOGIN FORM -->
+          <form id="login-form">
+            <input
+              type="email"
+              id="email"
+              class="input"
+              placeholder="Email address"
+              required
+            />
+
+            <input
+              type="password"
+              id="password"
+              class="input"
+              placeholder="Password"
+              required
+            />
+
+            <button type="submit" class="primary-btn full-width">
+              Login →
+            </button>
+          </form>
+
+          <p
+            style="
+              margin-top: 1rem;
+              font-size: 0.8rem;
+              color: var(--text-muted);
+              text-align: center;
+            "
+          >
+            This is a demo login. No real account needed.
+          </p>
+        </div>
+      </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+      <span>&copy; 2024 Kaha Chalen?</span>
+    </footer>
+    <script src="login.js"></script>
+  </body>
+</html>
