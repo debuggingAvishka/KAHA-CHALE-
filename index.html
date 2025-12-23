@@ -14,9 +14,10 @@
     <header class="navbar">
       <div class="nav-logo">Kaha Chalen?</div>
       <nav class="nav-links">
-        <a href="#" class="nav-link active">Home</a>
+        <a href="index.html" class="nav-link active">Home</a>
         <a href="#about" class="nav-link">About</a>
         <a href="#search" class="nav-link">Search Location</a>
+        <a href="suggest.html" class="nav-link" id="suggest-link">Suggest</a>
         <a href="login.html" class="nav-link nav-btn" id="auth-link">Login</a>
       </nav>
     </header>
@@ -44,7 +45,9 @@
 
         <div class="card suggest-card">
           <p>Found a new place that others should visit?</p>
-          <button class="primary-btn secondary" href="suggest.html">Suggest a place</button>
+          <a href="suggest.html" class="primary-btn secondary">
+            Suggest a place
+          </a>
         </div>
       </section>
 
@@ -111,10 +114,7 @@
     </main>
 
     <footer class="footer">
-      <p>
-        © 2025 Kaha Chalen? • Built using HTML, CSS &
-        JavaScript
-      </p>
+      <p>© 2025 Kaha Chalen? • Built using HTML, CSS & JavaScript</p>
     </footer>
 
     <script src="auth.js"></script>
