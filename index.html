@@ -4,13 +4,16 @@
     <meta charset="UTF-8" />
     <title>Kaha Chalen? | Find Your Next Hangout</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
     <link rel="stylesheet" href="styles.css" />
     <link
       rel="stylesheet"
       href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
     />
   </head>
+
   <body>
+    <!-- NAVBAR -->
     <header class="navbar">
       <div class="nav-logo">Kaha Chalen?</div>
       <nav class="nav-links">
@@ -22,8 +25,9 @@
       </nav>
     </header>
 
+    <!-- MAIN LAYOUT -->
     <main class="main-layout">
-      <!-- LEFT COLUMN: Explore your city + Map -->
+      <!-- LEFT COLUMN -->
       <section class="column column-left">
         <h2 class="section-title">Explore Your City</h2>
 
@@ -32,9 +36,7 @@
         </div>
 
         <div class="card location-card">
-          <p class="location-text">
-            <strong>Your current location</strong>
-          </p>
+          <p class="location-text"><strong>Your current location</strong></p>
           <button id="detect-location-btn" class="primary-btn outline">
             Use my location
           </button>
@@ -51,7 +53,7 @@
         </div>
       </section>
 
-      <!-- MIDDLE COLUMN: Logo + slideshow -->
+      <!-- MIDDLE COLUMN -->
       <section class="column column-middle">
         <div class="hero-card card">
           <h1 class="app-title">Kaha Chalen?</h1>
@@ -60,37 +62,21 @@
           </p>
         </div>
 
+        <!-- DYNAMIC SLIDESHOW -->
         <div class="card slideshow-card">
           <h3 class="section-subtitle">Picture-perfect places to visit</h3>
-          <div class="slideshow">
-            <div class="slide active">
-              <img src="images/lake.jpg" alt="Lake sunset" />
-              <div class="slide-caption">Relax by the serene lake</div>
-            </div>
-            <div class="slide">
-              <img src="images/cafe.jpg" alt="Cozy café" />
-              <div class="slide-caption">Unwind at a cozy café</div>
-            </div>
-            <div class="slide">
-              <img src="images/park.jpg" alt="Green park" />
-              <div class="slide-caption">Enjoy a peaceful walk in the park</div>
-            </div>
-          </div>
-          <div class="slide-dots">
-            <span class="dot active"></span>
-            <span class="dot"></span>
-            <span class="dot"></span>
-          </div>
+
+          <div class="slideshow" id="featured-slideshow"></div>
+          <div class="slide-dots" id="slide-dots"></div>
         </div>
       </section>
 
-      <!-- RIGHT COLUMN: Quiz CTA -->
+      <!-- RIGHT COLUMN -->
       <section class="column column-right">
         <div class="card quiz-card">
           <h2 class="quiz-title">Don’t know where to go?</h2>
           <p class="quiz-text">
-            Take a quick mood quiz and we’ll find the best hangout spots for you
-            and your friends.
+            Take a quick mood quiz and we’ll find the best hangout spots for you.
           </p>
           <ul class="quiz-bullets">
             <li>Filter by mood, budget & vibe</li>
@@ -105,8 +91,8 @@
         <div class="card info-card" id="about">
           <h3>About</h3>
           <p>
-            “Kaha Chalen?” helps you discover cafés, parks, malls, movie
-            theatres, arcades and more — all tailored to your mood.
+            “Kaha Chalen?” helps you discover cafés, parks, malls, movie theatres
+            and more — tailored to your mood.
           </p>
         </div>
 
@@ -122,32 +108,62 @@
       </section>
     </main>
 
+    <!-- FOOTER -->
     <footer class="footer">
       <p>© 2025 Kaha Chalen? • Built using HTML, CSS & JavaScript</p>
     </footer>
 
+    <!-- SCRIPTS -->
     <script src="auth.js"></script>
     <script src="navbar.js"></script>
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script src="places.js"></script>
     <script src="map.js"></script>
 
+    <!-- MAP INIT -->
     <script>
-      // Home page map setup
       initMap();
       addMarkers(places);
     </script>
+
+    <!-- SLIDESHOW LOGIC -->
     <script>
+      const slideshow = document.getElementById("featured-slideshow");
+      const dotsContainer = document.getElementById("slide-dots");
+
+      const featuredPlaces = places.filter((p) => p.featured);
+      let currentSlide = 0;
+
+      featuredPlaces.forEach((place, index) => {
+        const slide = document.createElement("div");
+        slide.className = "slide" + (index === 0 ? " active" : "");
+
+        slide.innerHTML = `
+          <img src="${place.image}" alt="${place.name}" />
+          <div class="slide-caption">
+            ${place.name}
+            <span style="font-size:0.75rem; opacity:0.8">
+              • ${place.category}
+            </span>
+          </div>
+        `;
+
+        slideshow.appendChild(slide);
+
+        const dot = document.createElement("span");
+        dot.className = "dot" + (index === 0 ? " active" : "");
+        dotsContainer.appendChild(dot);
+      });
+
       const slides = document.querySelectorAll(".slide");
       const dots = document.querySelectorAll(".dot");
-      let currentSlide = 0;
 
       setInterval(() => {
         slides[currentSlide].classList.remove("active");
         dots[currentSlide].classList.remove("active");
 
         currentSlide = (currentSlide + 1) % slides.length;
-        
+
         slides[currentSlide].classList.add("active");
         dots[currentSlide].classList.add("active");
       }, 4000);
