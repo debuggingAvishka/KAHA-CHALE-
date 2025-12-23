@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
-  initMap(); 
-  addMarkers(places); 
-  loadQuestion();     
+  initMap();
+  addMarkers(places);
+  loadQuestion();
 });
 
 const questionText = document.getElementById("question-text");
@@ -14,17 +14,6 @@ let currentQuestion = 0;
 let selectedAnswer = null;
 let collectedTags = [];
 
-// SAMPLE PLACES
-const places = [
-  { name: "Sethi Café", tags: ["cafe", "friends", "romantic"] },
-  { name: "Smart City Lake", tags: ["lake", "park", "chill"] },
-  { name: "South Avenue Mall", tags: ["mall", "fun"] },
-  { name: "Bargi Dam", tags: ["adventure", "nature"] },
-  { name: "Domino's", tags: ["food"] },
-  { name: "Rani Talab Park", tags: ["park", "family"] }
-];
-
-// QUIZ QUESTIONS
 const quizData = [
   {
     question: "What vibe are you in the mood for?",
@@ -43,15 +32,11 @@ const quizData = [
   }
 ];
 
-// Initialize map for quiz page
-initMap();
-addMarkers(places); // show all initially
-
 function loadQuestion() {
-  selectedAnswer = null;
   const q = quizData[currentQuestion];
   questionText.textContent = q.question;
   optionsArea.innerHTML = "";
+  selectedAnswer = null;
 
   q.options.forEach(option => {
     const btn = document.createElement("button");
@@ -71,15 +56,14 @@ function loadQuestion() {
 }
 
 function updateLiveResults() {
-  let allTags = collectedTags.flat();
-
-  let filtered = places.filter(place =>
-    place.tags.some(tag => allTags.includes(tag))
+  const allTags = collectedTags.flat();
+  const filtered = places.filter(p =>
+    p.tags.some(tag => allTags.includes(tag))
   );
 
   liveResults.innerHTML = "";
   filtered.forEach(p => {
-    let li = document.createElement("li");
+    const li = document.createElement("li");
     li.textContent = p.name;
     liveResults.appendChild(li);
   });
@@ -87,23 +71,18 @@ function updateLiveResults() {
   addMarkers(filtered);
 }
 
+nextBtn.onclick = () => {
+  if (!selectedAnswer) return alert("Select an option");
 
-nextBtn.addEventListener("click", () => {
-  if (!selectedAnswer) return alert("Please select an option");
-
-  const selectedIndex = quizData[currentQuestion].options.indexOf(selectedAnswer);
-  collectedTags.push(quizData[currentQuestion].tags[selectedIndex]);
+  const idx = quizData[currentQuestion].options.indexOf(selectedAnswer);
+  collectedTags.push(quizData[currentQuestion].tags[idx]);
 
   updateLiveResults();
-
   currentQuestion++;
 
-  if (currentQuestion >= quizData.length) {
+  if (currentQuestion < quizData.length) {
+    loadQuestion();
+  } else {
     alert("Quiz completed!");
-    return;
   }
-
-  loadQuestion();
-});
-
-loadQuestion();
+};

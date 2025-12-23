@@ -2,7 +2,8 @@ let map;
 let markerGroup;
 
 function initMap() {
-  if (map) return; // ✅ prevents double init
+  const mapDiv = document.getElementById("map");
+  if (!mapDiv || map) return;
 
   map = L.map("map").setView([23.1815, 79.9864], 13);
 
@@ -19,9 +20,10 @@ function addMarkers(placeList) {
   markerGroup.clearLayers();
 
   placeList.forEach(place => {
+    if (!place.lat || !place.lng) return;
+
     L.marker([place.lat, place.lng])
       .addTo(markerGroup)
-      .bindPopup(`<strong>${place.name}</strong>`);
+      .bindPopup(place.name);
   });
 }
-
