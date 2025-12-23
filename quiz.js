@@ -1,3 +1,9 @@
+document.addEventListener("DOMContentLoaded", () => {
+  initMap(); 
+  addMarkers(places); 
+  loadQuestion();     
+});
+
 const questionText = document.getElementById("question-text");
 const optionsArea = document.getElementById("options-area");
 const progressText = document.getElementById("progress-text");
@@ -77,7 +83,7 @@ function updateLiveResults() {
     li.textContent = p.name;
     liveResults.appendChild(li);
   });
-  
+
   addMarkers(filtered);
 }
 
