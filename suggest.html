@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Suggest a Place | Kaha Chalen?</title>
+
+        <link rel="stylesheet" href="quiz.css" />
+    </head>
+
+    <body>
+        <header class="navbar">
+            <div class="nav-logo">Kaha Chalen?</div>
+
+            <nav class="nav-links">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="quiz.html" class="nav-link">Quiz</a>
+                <a href="suggest.html" class="nav-link active">Suggest</a>
+                <a href="login.html" class="nav-link" id="auth-link">Login</a>
+            </nav>
+        </header>
+
+        <main class="main-layout" style="justify-content: center">
+            <div class="column column-middle" style="max-width: 520px">
+                <div class="card quiz-card">
+                    <h2 class="section-title">Suggest a Place</h2>
+                    <p class="section-subtitle">
+                        Share a new hangout spot with the community
+                    </p>
+
+                    <!-- SUGGESTION FORM -->
+                    <form id="suggestion-form">
+                        <input
+                            type="text"
+                            id="place-name"
+                            class="input"
+                            placeholder="Place Name"
+                            required
+                        />
+
+                        <select id ="place-category" class="input" required>
+                            <option value="">Select category</option></option>
+                            <option value="cafe">Café</option>
+                            <option value="park">Park</option>
+                            <option value="mall">Mall</option>
+                            <option value="movie">Movie Theater</option>
+                            <option value="restaurant">Restaurant</option>
+                        </select>
+            
+                        <input
+                            type="text"
+                            id="place-area"
+                            class="input"
+                            placeholder="Area / Locality"
+                            required
+                        />
+
+                        <textarea
+                            id="place-description"
+                            class="input"
+                            placeholder="Short Description"
+                            rows="3"
+                            required
+                        ></textarea>
+
+                        <button type="submit" class="primary-btn full-width">
+                            Submit Suggestion →
+                        </button>
+                    </form>
+
+                    <p 
+                        id="suggest-msg"
+                        style="
+                        display: none;
+                        margin-top: 1rem;
+                        font-size: 0.85rem;
+                        color: var(--accent-blue);
+                        text-align: center;"
+                        >
+                    Thank you! Your suggestion has been submitted.</p>
+                </div>
+            </div>
+        </main>
+
+        <footer class="footer">&copy; 2025 Kaha Chalen?</footer>
+
+        <script src="auth.js"></script>
+        <script src="navbar.js"></script>
+        <script src="suggest.js"></script>
+    </body>
+</html>
