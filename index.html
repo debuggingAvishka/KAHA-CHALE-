@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Kaha Chalen? | Find Your Next Hangout</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="styles.css" />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    />
+  </head>
+  <body>
+    <header class="navbar">
+      <div class="nav-logo">Kaha Chalen?</div>
+      <nav class="nav-links">
+        <a href="#" class="nav-link active">Home</a>
+        <a href="#about" class="nav-link">About</a>
+        <a href="#search" class="nav-link">Search Location</a>
+        <a href="#login" class="nav-link nav-btn">Login</a>
+      </nav>
+    </header>
+
+    <main class="main-layout">
+      <!-- LEFT COLUMN: Explore your city + Map -->
+      <section class="column column-left">
+        <h2 class="section-title">Explore Your City</h2>
+
+        <div class="card map-card">
+          <div id="map"></div>
+        </div>
+
+        <div class="card location-card">
+          <p class="location-text">
+            <strong>Your current location</strong>
+          </p>
+          <button id="detect-location-btn" class="primary-btn outline">
+            Use my location
+          </button>
+          <p id="location-output" class="location-output">
+            Location not detected yet.
+          </p>
+        </div>
+
+        <div class="card suggest-card">
+          <p>Found a new place that others should visit?</p>
+          <button class="primary-btn secondary">Suggest a place</button>
+        </div>
+      </section>
+
+      <!-- MIDDLE COLUMN: Logo + slideshow -->
+      <section class="column column-middle">
+        <div class="hero-card card">
+          <h1 class="app-title">Kaha Chalen?</h1>
+          <p class="app-subtitle">
+            Smart suggestions for cafés, parks, malls, movie nights and more.
+          </p>
+        </div>
+
+        <div class="card slideshow-card">
+          <h3 class="section-subtitle">Picture-perfect places to visit</h3>
+          <div class="slideshow">
+            <div class="slide active">Sunset point by the lake</div>
+            <div class="slide">Cozy rooftop café with fairy lights</div>
+            <div class="slide">Green park for long walks</div>
+          </div>
+          <div class="slide-dots">
+            <span class="dot active"></span>
+            <span class="dot"></span>
+            <span class="dot"></span>
+          </div>
+        </div>
+      </section>
+
+      <!-- RIGHT COLUMN: Quiz CTA -->
+      <section class="column column-right">
+        <div class="card quiz-card">
+          <h2 class="quiz-title">Don’t know where to go?</h2>
+          <p class="quiz-text">
+            Take a quick mood quiz and we’ll find the best hangout spots for you
+            and your friends.
+          </p>
+          <ul class="quiz-bullets">
+            <li>Filter by mood, budget & vibe</li>
+            <li>See only places that match you</li>
+            <li>Save spots to visit later</li>
+          </ul>
+          <a href="quiz.html" class="primary-btn full-width">
+            Take the quiz →
+          </a>
+        </div>
+
+        <div class="card info-card" id="about">
+          <h3>About</h3>
+          <p>
+            “Kaha Chalen?” helps you discover cafés, parks, malls, movie
+            theatres, arcades and more — all tailored to your mood.
+          </p>
+        </div>
+
+        <div class="card info-card" id="search">
+          <h3>Search another location</h3>
+          <input
+            type="text"
+            placeholder="Enter city or area (e.g. Jabalpur)"
+            class="input"
+          />
+          <button class="primary-btn small">Search</button>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer" id="login">
+      <p>
+        © 2025 Kaha Chalen? • Built with Frustration using HTML, CSS &
+        JavaScript
+      </p>
+    </footer>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+    <script src="places.js"></script>
+    <script src="map.js"></script>
+
+    <script>
+      // Home page map setup
+      initMap();
+      addMarkers(places);
+    </script>
+  </body>
+</html>
