@@ -2,6 +2,8 @@
 
 Kaha Chalen? is a mood-based place recommendation web application that helps users decide where to go based on their vibe, budget, and company.
 
+Live Demo: https://debuggingavishka.github.io/KAHA-CHALE-/
+
 ## Features
 - Interactive quiz
 - Live filtering of places
