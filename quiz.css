@@ -1,9 +1,3 @@
-/* ================================================================
-   HOME PAGE BASE STYLES (FROM YOUR PROVIDED CODE)
-   DO NOT EDIT — THIS IS YOUR DESIGN SYSTEM
-================================================================ */
-
-/* ---------- BASIC RESET ---------- */
 *,
 *::before,
 *::after {
@@ -43,7 +37,7 @@ body {
   flex-direction: column;
 }
 
-/* ---------- NAVBAR ---------- */
+
 .navbar {
   position: sticky;
   top: 0;
@@ -95,7 +89,7 @@ body {
   background: var(--accent-soft);
 }
 
-/* ---------- LAYOUT ---------- */
+
 .main-layout {
   flex: 1;
   max-width: var(--max-width);
@@ -115,7 +109,7 @@ body {
 .column-middle { flex: 1.5; }
 .column-right { flex: 1.3; }
 
-/* ---------- CARDS ---------- */
+
 .card {
   background: radial-gradient(circle at top, rgba(148, 163, 184, 0.2), #020617);
   border-radius: var(--radius-lg);
@@ -140,7 +134,6 @@ body {
   opacity: 1;
 }
 
-/* ---------- BUTTONS ---------- */
 .primary-btn {
   border: none;
   cursor: pointer;
@@ -163,11 +156,6 @@ body {
   width: 100%;
 }
 
-/* ================================================================
-   QUIZ PAGE ENHANCED STYLING (UPGRADED TO HOMEPAGE QUALITY)
-================================================================ */
-
-/* Better Quiz Cards */
 .quiz-card,
 .map-card,
 .column-right .card {
@@ -177,7 +165,6 @@ body {
   box-shadow: 0 28px 60px rgba(0,0,0,0.75);
 }
 
-/* Stronger Gradient Glow */
 .quiz-card::before,
 .map-card::before,
 .column-right .card::before {
@@ -193,7 +180,6 @@ body {
   filter: blur(16px);
 }
 
-/* Quiz Box */
 #quiz-box {
   background: rgba(3,7,18,0.55);
   border-radius: var(--radius-lg);
@@ -203,14 +189,13 @@ body {
   box-shadow: 0 22px 50px rgba(0,0,0,0.45);
 }
 
-/* Question */
+
 #question-text {
   font-size: 1.25rem;
   font-weight: 600;
   margin-bottom: 1rem;
 }
 
-/* Options */
 .option-btn {
   padding: 0.85rem 1rem;
   border-radius: var(--radius-md);
@@ -234,7 +219,7 @@ body {
   box-shadow: 0 22px 45px rgba(249,115,255,0.35);
 }
 
-/* Next Button */
+
 #next-btn {
   margin-top: 1.2rem;
   padding: 0.95rem;
@@ -242,7 +227,6 @@ body {
   border-radius: 999px;
 }
 
-/* Live Results */
 #live-results li {
   padding: 0.8rem 1rem;
   background: rgba(255,255,255,0.06);
@@ -265,11 +249,7 @@ body {
     font-size: 1.1rem;
   }
 }
-/* ================================================================
-    RESPONSIVE DESIGN — MATCH styles.css
-================================================================ */
 
-/* Mobile Layout Adjustments */
 @media (max-width: 800px) {
   .main-layout {
      flex-direction: column;
@@ -314,7 +294,6 @@ body {
   }
 }
 
-/* Small Devices */
 @media (max-width: 500px) {
   .navbar {
      padding: 0 0.7rem;
@@ -358,11 +337,7 @@ body {
      font-size: 0.93rem;
   }
 }
-/* =================================================================
-   QUIZ PAGE FIX PATCH — MATCH HOMEPAGE EXACTLY
-================================================================= */
 
-/* 1️⃣ FIX GRADIENT + SURFACE TO MATCH HOMEPAGE */
 .quiz-card,
 .map-card,
 .column-right .card {
@@ -375,7 +350,6 @@ body {
   overflow: hidden;
 }
 
-/* Same glow as homepage card */
 .quiz-card::before,
 .map-card::before,
 .column-right .card::before {
@@ -384,25 +358,23 @@ body {
   inset: -1px;
   border-radius: inherit;
   background: radial-gradient(circle at top left, rgba(110, 231, 183, 0.20), transparent 55%);
-  opacity: 0;                /* same as homepage default */
+  opacity: 0;     
   transition: opacity 0.25s;
 }
 
 .quiz-card:hover::before,
 .map-card:hover::before,
 .column-right .card:hover::before {
-  opacity: 1;                /* same hover glow */
+  opacity: 1;         
 }
 
-/* 2️⃣ FIX QUIZ OPTION STACKING / SPACING */
 #options-area {
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;   /* perfect spacing */
+  gap: 0.75rem;  
   margin-top: 1rem;
 }
 
-/* fix button width */
 .option-btn {
   width: 100%;
   text-align: left;
@@ -410,9 +382,8 @@ body {
   border-radius: var(--radius-md);
 }
 
-/* 3️⃣ FIX MAP AREA height + border + look */
 #map-placeholder {
-  height: 240px !important;               /* consistent height */
+  height: 240px !important;              
   border-radius: var(--radius-md);
   border: 1px dashed rgba(148, 163, 184, 0.45);
   background: rgba(255,255,255,0.02);
@@ -423,24 +394,17 @@ body {
   font-size: 0.85rem;
 }
 
-/* Restore spacing in columns to match homepage */
 .column-left .card,
 .column-middle .card,
 .column-right .card {
   padding: 1.3rem 1.4rem;
 }
 
-/* Fix quiz box spacing/alignment */
 #quiz-box {
   margin-top: 1.2rem;
   padding: 1.4rem;
 }
 
-/* ================================================================
-   POLISH PATCH — EXACT HOMEPAGE GRADIENT + GLOW (STYLE A)
-================================================================ */
-
-/* 🔥 1. MATCH HOMEPAGE CARD GRADIENT EXACTLY */
 .quiz-card,
 .map-card,
 .column-right .card {
@@ -458,7 +422,6 @@ body {
   overflow: hidden;
 }
 
-/* 🔥 2. STRONG HOMEPAGE-LIKE AMBIENT GLOW */
 .quiz-card::before,
 .map-card::before,
 .column-right .card::before {
@@ -486,7 +449,6 @@ body {
   filter: blur(22px);
 }
 
-/* 🔥 3. MAP AREA — SAME DEPTH AS HOMEPAGE */
 #map-placeholder {
   height: 240px;
   border-radius: var(--radius-md);
@@ -501,7 +463,6 @@ body {
       inset 0 0 40px rgba(110,231,183,0.08);
 }
 
-/* 🔥 4. OPTION BUTTONS — MAKE THEM AIRY LIKE HOMEPAGE INPUTS */
 .option-btn {
   width: 100%;
   padding: 1rem 1.1rem;
@@ -515,7 +476,6 @@ body {
   letter-spacing: 0.2px;
 }
 
-/* homepage-style hover glow */
 .option-btn:hover {
   background: rgba(255,255,255,0.12);
   border-color: var(--accent-blue);
@@ -523,14 +483,12 @@ body {
   box-shadow: 0 12px 25px rgba(37,99,235,0.25);
 }
 
-/* homepage-style “selected” look */
 .option-btn.selected {
   background: rgba(96,165,250,0.20);
   border-color: var(--accent-blue);
   box-shadow: 0 18px 40px rgba(96,165,250,0.35);
 }
 
-/* 🔥 5. MIDDLE QUIZ BOX — add subtle inner glow like homepage hero */
 #quiz-box {
   background: radial-gradient(circle at 40% 0%,
       rgba(255,255,255,0.07),
@@ -548,7 +506,6 @@ body {
   backdrop-filter: blur(14px);
 }
 
-/* 🔥 6. FILTERED OPTIONS RIGHT-SIDE LIST */
 #live-results li {
   padding: 1rem 1.2rem;
   border-radius: var(--radius-md);
@@ -568,7 +525,6 @@ body {
   box-shadow: 0 12px 30px rgba(96,165,250,0.35);
 }
 
-/* 🔥 7. QUESTION TITLE — make it pop like homepage headers */
 #question-text {
   font-size: 1.45rem;
   font-weight: 700;
