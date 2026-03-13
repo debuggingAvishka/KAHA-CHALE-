@@ -4,217 +4,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Your Results | Kaha Chalen?</title>
-    <link rel="stylesheet" href="quiz.css" />
+    <link rel="stylesheet" href="styles.css" />
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-    <style>
-      /* ── Results-specific styles ── */
-      .results-header {
-        text-align: center;
-        padding: 2rem 1rem 1rem;
-      }
- 
-      .results-title {
-        font-size: 2rem;
-        font-weight: 800;
-        background-image: var(--bg-gradient);
-        -webkit-background-clip: text;
-        background-clip: text;
-        color: transparent;
-        margin-bottom: 0.4rem;
-      }
- 
-      .results-subtitle {
-        font-size: 0.95rem;
-        color: var(--text-muted);
-      }
- 
-      /* Tag pills shown at top */
-      .tag-pills {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 0.5rem;
-        margin: 0.8rem 0 0;
-        justify-content: center;
-      }
- 
-      .tag-pill {
-        padding: 0.25rem 0.75rem;
-        border-radius: 999px;
-        font-size: 0.78rem;
-        border: 1px solid rgba(96, 165, 250, 0.5);
-        color: var(--accent-blue);
-        background: rgba(96, 165, 250, 0.08);
-        text-transform: capitalize;
-      }
- 
-      /* Results grid */
-      .results-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-        gap: 1.2rem;
-        padding: 1.5rem 1.5rem 2rem;
-        max-width: var(--max-width);
-        margin: 0 auto;
-        width: 100%;
-      }
- 
-      /* Individual place card */
-      .place-card {
-        background: radial-gradient(
-          circle at 20% 10%,
-          rgba(148, 163, 184, 0.18),
-          rgba(37, 99, 235, 0.08) 40%,
-          rgba(15, 23, 42, 1) 85%
-        );
-        border-radius: var(--radius-lg);
-        border: 1px solid rgba(148, 163, 184, 0.3);
-        overflow: hidden;
-        box-shadow: 0 18px 40px rgba(0, 0, 0, 0.7);
-        transition: transform 0.25s ease, box-shadow 0.25s ease;
-        cursor: pointer;
-        animation: fadeUp 0.4s ease both;
-      }
- 
-      .place-card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 28px 55px rgba(37, 99, 235, 0.25);
-      }
- 
-      @keyframes fadeUp {
-        from { opacity: 0; transform: translateY(20px); }
-        to   { opacity: 1; transform: translateY(0); }
-      }
- 
-      .place-card:nth-child(1) { animation-delay: 0.05s; }
-      .place-card:nth-child(2) { animation-delay: 0.12s; }
-      .place-card:nth-child(3) { animation-delay: 0.19s; }
-      .place-card:nth-child(4) { animation-delay: 0.26s; }
-      .place-card:nth-child(5) { animation-delay: 0.33s; }
-      .place-card:nth-child(6) { animation-delay: 0.40s; }
- 
-      .place-img-wrap {
-        position: relative;
-        height: 160px;
-        overflow: hidden;
-      }
- 
-      .place-img-wrap img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        display: block;
-        transition: transform 0.4s ease;
-      }
- 
-      .place-card:hover .place-img-wrap img {
-        transform: scale(1.06);
-      }
- 
-      .place-img-wrap::after {
-        content: "";
-        position: absolute;
-        inset: 0;
-        background: linear-gradient(to top, rgba(2, 6, 23, 0.8), transparent 55%);
-      }
- 
-      .place-category-badge {
-        position: absolute;
-        top: 10px;
-        right: 10px;
-        z-index: 2;
-        font-size: 0.7rem;
-        font-weight: 600;
-        text-transform: uppercase;
-        letter-spacing: 0.08em;
-        padding: 0.2rem 0.6rem;
-        border-radius: 999px;
-        background: rgba(15, 23, 42, 0.85);
-        border: 1px solid rgba(148, 163, 184, 0.35);
-        color: var(--text-muted);
-        backdrop-filter: blur(6px);
-      }
- 
-      .place-body {
-        padding: 1rem 1.1rem 1.2rem;
-      }
- 
-      .place-name {
-        font-size: 1.05rem;
-        font-weight: 700;
-        color: var(--text-main);
-        margin-bottom: 0.35rem;
-      }
- 
-      .place-tags {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 0.35rem;
-        margin-top: 0.5rem;
-      }
- 
-      .place-tag {
-        font-size: 0.7rem;
-        padding: 0.15rem 0.55rem;
-        border-radius: 999px;
-        background: rgba(249, 115, 255, 0.1);
-        border: 1px solid rgba(249, 115, 255, 0.25);
-        color: var(--accent);
-        text-transform: capitalize;
-      }
- 
-      /* No results state */
-      .no-results {
-        text-align: center;
-        padding: 3rem 1rem;
-        color: var(--text-muted);
-        max-width: 400px;
-        margin: 0 auto;
-      }
- 
-      .no-results-icon {
-        font-size: 3rem;
-        margin-bottom: 1rem;
-      }
- 
-      .no-results h3 {
-        font-size: 1.2rem;
-        color: var(--text-main);
-        margin-bottom: 0.5rem;
-      }
- 
-      /* Map section */
-      .map-section {
-        max-width: var(--max-width);
-        margin: 0 auto 2rem;
-        padding: 0 1.5rem;
-        width: 100%;
-      }
- 
-      .map-section-title {
-        font-size: 0.85rem;
-        letter-spacing: 0.12em;
-        text-transform: uppercase;
-        color: var(--text-muted);
-        margin-bottom: 0.75rem;
-      }
- 
-      #results-map {
-        height: 280px;
-        width: 100%;
-        border-radius: var(--radius-lg);
-        border: 1px solid rgba(148, 163, 184, 0.4);
-        box-shadow: inset 0 0 20px rgba(37, 99, 235, 0.15), 0 10px 30px rgba(0,0,0,0.6);
-      }
- 
-      /* Action buttons row */
-      .actions-row {
-        display: flex;
-        gap: 1rem;
-        justify-content: center;
-        padding: 0 1rem 2.5rem;
-        flex-wrap: wrap;
-      }
-    </style>
   </head>
  
   <body>
@@ -238,6 +29,12 @@
  
     <!-- RESULTS GRID -->
     <div class="results-grid" id="results-grid"></div>
+
+    <!-- USER SUGGESTIONS -->
+    <div class="map-section" id="suggested-wrapper" style="display:none;">
+      <p class="map-section-title">✨ Community suggested spots</p>
+      <ul id="suggested-list"></ul>
+    </div>
  
     <!-- MAP -->
     <div class="map-section">
@@ -266,8 +63,10 @@
       const savedTags = JSON.parse(localStorage.getItem("quizTags")) || [];
       const grid = document.getElementById("results-grid");
       const pillsContainer = document.getElementById("tag-pills");
+      const suggestedWrapper = document.getElementById("suggested-wrapper");
+      const suggestedList = document.getElementById("suggested-list");
  
-      // Show the tags the user picked as pills
+      // Show the tags the user picked as pills (if any)
       const uniqueTags = [...new Set(savedTags.flat())];
       if (uniqueTags.length) {
         uniqueTags.forEach(tag => {
@@ -277,14 +76,26 @@
           pillsContainer.appendChild(pill);
         });
       }
- 
-      // Filter places by matching tags
-      const matched = places.filter(p =>
-        p.tags && p.tags.some(tag => uniqueTags.includes(tag))
-      );
+
+      // Filter places by matching tags (quiz logic unchanged)
+      const matched = uniqueTags.length
+        ? places.filter(p =>
+            p.tags && p.tags.some(tag => uniqueTags.includes(tag))
+          )
+        : [];
  
       // ── Render cards ──
-      if (matched.length === 0) {
+      if (!uniqueTags.length) {
+        grid.innerHTML = `
+          <div class="no-results" style="grid-column: 1/-1">
+            <div class="no-results-icon">🧭</div>
+            <h3>No quiz answers found</h3>
+            <p>Take the quiz so we can match places to your mood.</p>
+            <p style="margin-top:0.75rem;">
+              <a href="quiz.html" class="primary-btn secondary">Start the quiz →</a>
+            </p>
+          </div>`;
+      } else if (matched.length === 0) {
         grid.innerHTML = `
           <div class="no-results" style="grid-column: 1/-1">
             <div class="no-results-icon">🗺️</div>
@@ -316,6 +127,17 @@
         });
       }
  
+      // ── Load community suggested places ──
+      const suggestedPlaces = JSON.parse(localStorage.getItem("suggestedPlaces")) || [];
+      if (suggestedPlaces.length && suggestedWrapper && suggestedList) {
+        suggestedWrapper.style.display = "block";
+        suggestedPlaces.forEach(place => {
+          const li = document.createElement("li");
+          li.textContent = `${place.name} – ${place.area} (${place.category})`;
+          suggestedList.appendChild(li);
+        });
+      }
+
       // ── Init map and drop markers ──
       (function initResultsMap() {
         const mapEl = document.getElementById("results-map");

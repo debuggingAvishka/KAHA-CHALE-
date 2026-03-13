@@ -1,27 +1,3 @@
-// Simple slideshow rotation
-const slides = document.querySelectorAll(".slide");
-const dots = document.querySelectorAll(".dot");
-
-let currentSlide = 0;
-
-function showSlide(index) {
-  slides.forEach((s, i) => {
-    s.classList.toggle("active", i === index);
-  });
-  dots.forEach((d, i) => {
-    d.classList.toggle("active", i === index);
-  });
-}
-
-function nextSlide() {
-  currentSlide = (currentSlide + 1) % slides.length;
-  showSlide(currentSlide);
-}
-
-if (slides.length) {
-  setInterval(nextSlide, 3500);
-}
-
 // Very basic geolocation (for later map use)
 const detectBtn = document.getElementById("detect-location-btn");
 const output = document.getElementById("location-output");
