@@ -140,6 +140,7 @@ body {
   background: radial-gradient(circle at top left, rgba(110, 231, 183, 0.18), transparent 60%);
   opacity: 0;
   transition: var(--transition-fast);
+  pointer-events: none;
 }
 
 .card:hover::before {
