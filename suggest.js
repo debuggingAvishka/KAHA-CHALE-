@@ -4,8 +4,8 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
     }
 
-    const form =document.getElementById("suggest-form");
-    const successMsg = document.getElementById("success-msg");
+    const form = document.getElementById("suggestion-form");
+    const successMsg = document.getElementById("suggest-msg");
 
     form.addEventListener("submit", (e) =>{
         e.preventDefault();

@@ -83,6 +83,8 @@ nextBtn.onclick = () => {
   if (currentQuestion < quizData.length) {
     loadQuestion();
   } else {
-    alert("Quiz completed!");
-  }
+    // Save collected tags so results.html can read them
+    localStorage.setItem("quizTags", JSON.stringify(collectedTags));
+    window.location.href = "results.html";
+}
 };
