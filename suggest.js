@@ -5,6 +5,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     const form = document.getElementById("suggestion-form");
+    if (!form) return;
     const successMsg = document.getElementById("suggest-msg");
 
     form.addEventListener("submit", (e) =>{
