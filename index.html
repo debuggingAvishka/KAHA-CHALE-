@@ -56,7 +56,7 @@
 
       <!-- MIDDLE COLUMN -->
       <section class="column column-middle">
-        <div class="hero-card card">
+        <div class="hero-card card highlight-card">
           <h1 class="app-title">Kaha Chalen?</h1>
           <p class="app-subtitle">
             Smart suggestions for cafés, parks, malls, movie nights and more.
@@ -79,11 +79,11 @@
           <p class="quiz-text">
             Take a quick mood quiz and we’ll find the best hangout spots for you.
           </p>
-          <ul class="quiz-bullets">
-            <li>Filter by mood, budget & vibe</li>
-            <li>See only places that match you</li>
-            <li>Save spots to visit later</li>
-          </ul>
+          <div class="quiz-features">
+            <div class="feature-item">Filter by mood, budget & vibe</div>
+            <div class="feature-item">See only places that match you</div>
+            <div class="feature-item">Save spots to visit later</div>
+          </div>
           <a href="quiz.html" class="primary-btn full-width">
             Take the quiz →
           </a>
@@ -99,13 +99,16 @@
 
         <div class="card info-card" id="search">
           <h3>Search another location</h3>
-          <input
+          <div class="search-row"> 
+            <input
             type="text"
             id="search-city-input"
             placeholder="Enter city or area (e.g. Jabalpur)"
             class="input"
-          />
-          <button class="primary-btn small" id="search-city-btn">Search</button>
+            />
+            <button class="primary-btn small" id="search-city-btn">
+            Search</button>
+          </div>
         </div>
       </section>
     </main>
