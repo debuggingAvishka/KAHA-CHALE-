@@ -5,6 +5,7 @@ ul, ol {
   padding: 0;
   margin: 0;
 }
+
 :root {
   --bg: #050816;
   --bg-elevated: #06091a;
@@ -150,6 +151,13 @@ img { max-width: 100%; display: block; }
 .column-middle{ flex: 1.5; }
 .column-right { flex: 1.3; }
 
+.column-right .card {
+  transition: transform 0.25s ease;
+}
+
+.column-right .card:hover {
+  transform: translateY(-4px);
+}
 /* CARDS & TEXT */
 .card {
   background: radial-gradient(
@@ -203,14 +211,38 @@ img { max-width: 100%; display: block; }
 }
 
 .hero-card { padding: 1.2rem 1.3rem; }
-
+.quiz-title {
+  font-size: 1.3rem;
+  font-weight: 700;
+  background-image: linear-gradient(135deg, #a855f7, #f472b6);
+  -webkit-background-clip: text;
+  color: transparent;
+}
 .app-title {
   font-size: 2rem;
   background-image: linear-gradient(135deg, #6a11cb, #a855f7, #f472b6, #2563eb);
   -webkit-background-clip: text;
   color: transparent;
 }
+.card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.search-row {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.6rem;
+}
 
+.search-row .input {
+  flex: 1;
+}
+
+.search-row .primary-btn {
+  white-space: nowrap;
+}
+.card:hover {
+  transform: translateY(-3px);
+}
 .app-subtitle {
   font-size: 0.95rem;
   color: var(--text-muted);
@@ -382,7 +414,12 @@ textarea {
   max-width: var(--max-width);
   margin: 0 auto;
 }
-
+.highlight-card {
+  padding: 1.8rem 1.6rem;
+  box-shadow:
+    0 25px 60px rgba(0, 0, 0, 0.9),
+    0 0 60px rgba(168, 85, 247, 0.25);
+}
 .place-card {
   background: var(--bg-elevated);
   border-radius: var(--radius-lg);
@@ -481,6 +518,11 @@ textarea {
 #question-text {
   font-size: 1.2rem;
   margin-bottom: 0.9rem;
+}
+.quiz-features p {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  margin-bottom: 0.4rem;
 }
 
 #options-area {
