@@ -11,11 +11,17 @@ document.addEventListener("DOMContentLoaded", () => {
     form.addEventListener("submit", (e) =>{
         e.preventDefault();
 
+        const nameEl = document.getElementById("place-name");
+        const categoryEl = document.getElementById("place-category");
+        const areaEl = document.getElementById("place-area");
+        const descriptionEl = document.getElementById("place-description");
+        if (!nameEl || !categoryEl || !areaEl || !descriptionEl) return;
+
         const place = {
-            name: document.getElementById("place-name").value.trim(),
-            category: document.getElementById("place-category").value,
-            area: document.getElementById("place-area").value.trim(),
-            description: document.getElementById("place-description").value.trim(),
+            name: nameEl.value.trim(),
+            category: categoryEl.value,
+            area: areaEl.value.trim(),
+            description: descriptionEl.value.trim(),
             suggestedBy: localStorage.getItem("userEmail"),
             createdAt: new Date().toISOString()
         };
@@ -32,6 +38,6 @@ document.addEventListener("DOMContentLoaded", () => {
         localStorage.setItem("suggestedPlaces", JSON.stringify(existing));
 
         form.reset();
-        successMsg.style.display = "block";
+        if (successMsg) successMsg.style.display = "block";
     })
 });

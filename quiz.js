@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const nextBtn = document.getElementById("next-btn");
   const liveResults = document.getElementById("live-results");
 
-  if (!questionText) return; // prevents crash on other pages
+  if (!questionText || !optionsArea || !progressText || !nextBtn || !liveResults) return; // prevents crash on other pages
 
   let currentQuestion = 0;
   let selectedAnswer = null;
