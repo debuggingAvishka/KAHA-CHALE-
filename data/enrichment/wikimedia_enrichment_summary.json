@@ -1,0 +1,13 @@
+{
+  "selected_places": 5,
+  "wikidata_candidates": 5,
+  "commons_image_candidates": 7,
+  "api_errors": 1,
+  "outputs": [
+    "data\\enrichment\\wikidata_candidates.csv",
+    "data\\enrichment\\commons_image_candidates.csv",
+    "data\\enrichment\\enrichment_api_errors.json"
+  ],
+  "matching_policy": "Coordinate + name heuristic; confidence is not a probability.",
+  "safety": "Candidate discovery only. No database writes, no automatic publishing."
+}

@@ -1,0 +1,8 @@
+[
+  {
+    "osm_id": "node/14289276859",
+    "place_name": "Balancing Rock",
+    "source": "Wikidata",
+    "error": "API request failed after 3 attempts: HTTP Error 429: Too Many Requests"
+  }
+]
