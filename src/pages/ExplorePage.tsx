@@ -14,7 +14,7 @@ function ExplorePage() {
                 </h1>
 
                 <p className="mt-3 text-muted">
-                    Discover places worth visiting around your city.
+                    From city landmarks to nearby escapes and extended trips, find a place for your kind of day.
                 </p>
 
                 <div className="mt-12">

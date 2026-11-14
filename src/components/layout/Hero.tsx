@@ -11,12 +11,12 @@ function Hero() {
       </h1>
 
       <p className="mt-6 max-w-2xl text-lg leading-relaxed text-muted">
-        Find places in Jabalpur that match your mood, your company and your kind of day.
+        Discover Jabalpur and nearby escapes that match your mood, your company and your kind of day.
       </p>
 
       <div className="mt-8 flex items-center gap-6">
         <a
-          href="#discover"
+          href="/explore"
           className="rounded-md bg-terracotta px-6 py-3 text-white"
         >
           Find my place
