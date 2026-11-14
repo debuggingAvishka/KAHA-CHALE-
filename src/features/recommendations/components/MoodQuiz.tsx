@@ -1,6 +1,5 @@
 import { useState } from 'react'
-import featuredPlaces from '../../places/data/featuredPlaces'
-
+import { usePlaces } from '../../places/hooks/usePlaces'
 
 
 import {
@@ -71,6 +70,7 @@ function OptionCard<T extends string>({
 }
 
 function MoodQuiz() {
+    const { places, loading, source, message } = usePlaces()
     const [moods, setMoods] = useState<Mood[]>([])
     const [interests, setInterests] = useState<Interest[]>([])
     const [company, setCompany] = useState<Company | null>(null)
@@ -110,6 +110,25 @@ function MoodQuiz() {
                 <p className="mt-3 text-muted">
                     Tell us a little about your plans. We'll help you find somewhere to go.
                 </p>
+                {loading && (
+                    <p className="mt-4 text-sm text-muted" role="status">
+                        Loading places from our directory...
+                    </p>
+                )}
+
+                {!loading && (
+                    <div className="mt-4 text-sm text-muted" role="status">
+                        <p>
+                            {source === 'supabase'
+                                ? 'Recommendations are using published places from our live directory.'
+                                : 'Preview mode: recommendations are using the bundled sample dataset.'}
+                        </p>
+
+                        {message && (
+                            <p className="mt-1">{message}</p>
+                        )}
+                    </div>
+                )}
 
                 {/* Mood selection */}
                 <div className="mt-12">
@@ -207,15 +226,13 @@ function MoodQuiz() {
                 </div>
                 <button
                     type="button"
-                    disabled={!isComplete}
+                    disabled={!isComplete || loading || places.length === 0}
                     onClick={() => {
-                        setRecommendations(
-                            recommendPlaces(featuredPlaces, answers)
-                        )
+                        setRecommendations(recommendPlaces(places, answers))
                     }}
                     className="mt-6 rounded-md bg-terracotta px-6 py-3 text-white disabled:cursor-not-allowed disabled:opacity-40"
                 >
-                    Find my places
+                    {loading ? 'Loading places...' : 'Find my places'}
                 </button>
 
                 {recommendations !== null && (

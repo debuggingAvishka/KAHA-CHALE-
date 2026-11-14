@@ -1,11 +1,58 @@
 
 import { useState } from 'react'
 import { Link } from 'react-router'
+import { useAuth } from '../../features/auth/AuthProvider'
 
 function Navbar() {
     const [menuOpen, setMenuOpen] = useState(false)
+    const { user, loading, signOut } = useAuth()
+    const [signingOut, setSigningOut] = useState(false)
 
     const closeMenu = () => setMenuOpen(false)
+
+    const handleSignOut = async () => {
+        setSigningOut(true)
+
+        try {
+            await signOut()
+            closeMenu()
+        } catch (error) {
+            console.error('Sign out failed:', error)
+        } finally {
+            setSigningOut(false)
+        }
+    }
+
+    const authLinks = (
+        <>
+            {loading ? null : user ? (
+                <>
+                    <span className="max-w-40 truncate text-sm text-muted">
+                        {user.email}
+                    </span>
+                    <button
+                        type="button"
+                        onClick={handleSignOut}
+                        disabled={signingOut}
+                        className="font-medium text-terracotta disabled:opacity-50"
+                    >
+                        {signingOut ? 'Signing out...' : 'Sign Out'}
+                    </button>
+                </>
+            ) : (
+                <>
+                    <Link to="/login" onClick={closeMenu}>Login</Link>
+                    <Link
+                        to="/signup"
+                        onClick={closeMenu}
+                        className="font-medium text-terracotta"
+                    >
+                        Sign Up
+                    </Link>
+                </>
+            )}
+        </>
+    )
 
     return (
         <header className="relative z-50 bg-ivory text-charcoal">
@@ -21,25 +68,16 @@ function Navbar() {
                     KAHA CHALE
                 </Link>
 
-                {/* Desktop navigation */}
                 <div className="hidden items-center gap-8 md:flex">
                     <Link to="/">Home</Link>
                     <Link to="/explore">Explore</Link>
                     <Link to="/about">About</Link>
                 </div>
 
-                {/* Desktop authentication */}
                 <div className="hidden items-center gap-8 md:flex">
-                    <Link to="/login">Login</Link>
-                    <Link
-                        to="/signup"
-                        className="font-medium text-terracotta"
-                    >
-                        Sign Up
-                    </Link>
+                    {authLinks}
                 </div>
 
-                {/* Mobile menu button */}
                 <button
                     type="button"
                     onClick={() => setMenuOpen((current) => !current)}
@@ -54,7 +92,6 @@ function Navbar() {
                 </button>
             </nav>
 
-            {/* Mobile navigation */}
             {menuOpen && (
                 <div
                     id="mobile-navigation"
@@ -67,15 +104,32 @@ function Navbar() {
 
                         <div className="border-t border-sand" />
 
-                        <Link to="/login" onClick={closeMenu}>Login</Link>
-
-                        <Link
-                            to="/signup"
-                            onClick={closeMenu}
-                            className="font-semibold text-terracotta"
-                        >
-                            Sign Up
-                        </Link>
+                        {loading ? null : user ? (
+                            <>
+                                <span className="break-all text-sm text-muted">
+                                    {user.email}
+                                </span>
+                                <button
+                                    type="button"
+                                    onClick={handleSignOut}
+                                    disabled={signingOut}
+                                    className="text-left font-medium text-terracotta"
+                                >
+                                    {signingOut ? 'Signing out...' : 'Sign Out'}
+                                </button>
+                            </>
+                        ) : (
+                            <>
+                                <Link to="/login" onClick={closeMenu}>Login</Link>
+                                <Link
+                                    to="/signup"
+                                    onClick={closeMenu}
+                                    className="font-semibold text-terracotta"
+                                >
+                                    Sign Up
+                                </Link>
+                            </>
+                        )}
                     </div>
                 </div>
             )}
