@@ -17,6 +17,14 @@ type SupabasePlaceRow = {
 
 type LookupRow = { id: string; name: string; slug?: string; locality_type?: string }
 
+type SupabasePlaceImageRow = {
+  place_id: string
+  image_url: string
+  attribution: string | null
+  source_page_url: string | null
+  licence: string | null
+}
+
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL?.replace(/\/$/, '')
 const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY
 
@@ -57,10 +65,12 @@ function toRegion(localityName: string | null, placeName: string): Place['region
   if (placeName === 'Singorgarh Fort' || placeName === 'Veerangana Durgavati Wildlife Sanctuary') {
     return 'Extended trip'
   }
+  const locality = localityName?.toLowerCase()
+  if (locality === 'bhedaghat') return 'Nearby'
+  if (locality === 'jabalpur') return 'Jabalpur'
   if (['Dhuandhar Falls', 'Marble Rocks', 'Bargi dam', 'Bargi Dam'].includes(placeName)) {
     return 'Nearby'
   }
-  if (localityName?.toLowerCase() === 'jabalpur') return 'Jabalpur'
   return 'To be verified'
 }
 
@@ -74,13 +84,25 @@ export async function fetchPublishedPlaces(): Promise<Place[]> {
     selectRows<LookupRow>('localities', 'select=id,name,locality_type'),
   ])
 
+  const imageRows = rows.length > 0
+    ? await selectRows<SupabasePlaceImageRow>(
+        'place_images',
+        `select=place_id,image_url,attribution,source_page_url,licence&place_id=in.(${rows.map((row) => row.id).join(',')})&is_primary=eq.true&verification_status=eq.verified`,
+      )
+    : []
+
   const categoryById = new Map(categories.map((item) => [item.id, item.slug ?? item.name]))
   const localityById = new Map(localities.map((item) => [item.id, item.name]))
+  const imageByPlaceId = new Map<string, SupabasePlaceImageRow>()
+  for (const image of imageRows) {
+    if (!imageByPlaceId.has(image.place_id)) imageByPlaceId.set(image.place_id, image)
+  }
 
   return rows.map((row) => {
     const locality = row.locality_id ? localityById.get(row.locality_id) ?? null : null
     const category = categoryById.get(row.category_id) ?? 'other'
     const area = row.area ?? row.address ?? locality ?? 'Jabalpur region'
+    const image = imageByPlaceId.get(row.id)
     return {
       id: row.id,
       name: row.name,
@@ -88,7 +110,10 @@ export async function fetchPublishedPlaces(): Promise<Place[]> {
       description: row.description ?? 'Visitor details are awaiting verification.',
       area,
       region: toRegion(locality, row.name),
-      imageUrl: '',
+      imageUrl: image?.image_url ?? '',
+      imageAttribution: image?.attribution ?? undefined,
+      imageSourceUrl: image?.source_page_url ?? undefined,
+      imageLicence: image?.licence ?? undefined,
       latitude: row.latitude,
       longitude: row.longitude,
       sourceUrl: undefined,

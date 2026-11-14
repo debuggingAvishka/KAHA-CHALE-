@@ -1,0 +1,14 @@
+{
+  "input_records": 100,
+  "named_records": 95,
+  "records_needing_enrichment": 95,
+  "tasks": {
+    "missing_description": 95,
+    "missing_image": 95,
+    "missing_opening_hours": 90,
+    "missing_website": 94,
+    "category_review_required": 0
+  },
+  "output": "data\\enrichment\\enrichment_queue.csv",
+  "safety": "Review queue only. No generated facts and no automatic publishing."
+}

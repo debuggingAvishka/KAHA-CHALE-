@@ -8,6 +8,9 @@ export interface Place {
   area: string
   region: 'Jabalpur' | 'Nearby' | 'Extended trip' | 'To be verified'
   imageUrl: string
+  imageAttribution?: string
+  imageSourceUrl?: string
+  imageLicence?: string
   latitude: number | null
   longitude: number | null
   sourceUrl?: string

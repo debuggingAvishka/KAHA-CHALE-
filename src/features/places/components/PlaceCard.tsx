@@ -2,6 +2,15 @@ import { useState } from 'react'
 import type { Place } from '../types'
 
 interface PlaceCardProps { place: Place }
+
+function getPhotoCredit(place: Place): string {
+  const attribution = place.imageAttribution?.trim() ?? ''
+  const licence = place.imageLicence?.trim() ?? ''
+  if (!attribution) return licence
+  // Some source records already include the licence in their attribution.
+  if (licence && attribution.toLowerCase().includes(licence.toLowerCase())) return attribution
+  return licence ? `${attribution} · ${licence}` : attribution
+}
 const categoryLabels: Record<string, string> = {
   nature_outdoors: 'Nature & Outdoors', food_cafes: 'Food & Cafes',
   accommodation: 'Accommodation', tourist_attraction: 'Tourist Attraction',
@@ -11,6 +20,7 @@ const categoryLabels: Record<string, string> = {
 function PlaceCard({ place }: PlaceCardProps) {
   const [imageFailed, setImageFailed] = useState(false)
   const showFallback = !place.imageUrl || imageFailed
+  const photoCredit = getPhotoCredit(place)
   const mapUrl = place.latitude !== null && place.longitude !== null
     ? `https://www.google.com/maps/search/?api=1&query=${place.latitude},${place.longitude}`
     : `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(place.name)}`
@@ -28,6 +38,25 @@ function PlaceCard({ place }: PlaceCardProps) {
         )}
         <span className="absolute left-4 top-4 rounded-full bg-ivory/95 px-3 py-1 text-xs font-semibold text-charcoal">{place.region}</span>
       </div>
+      {place.imageUrl && photoCredit && (
+        <div className="border-b border-sand bg-white px-5 py-2">
+          {place.imageSourceUrl ? (
+            <a
+              href={place.imageSourceUrl}
+              target="_blank"
+              rel="noreferrer"
+              className="text-[10px] leading-relaxed text-muted hover:text-terracotta hover:underline"
+              aria-label={`Photo credit and licence: ${photoCredit}`}
+            >
+              {photoCredit}
+            </a>
+          ) : (
+            <p className="text-[10px] leading-relaxed text-muted">
+              {photoCredit}
+            </p>
+          )}
+        </div>
+      )}
       <div className="p-5">
         <p className="text-xs font-bold uppercase tracking-wider text-terracotta">{categoryLabels[place.category] ?? place.category.replaceAll('_', ' ')}</p>
         <h3 className="mt-2 font-display text-2xl text-charcoal">{place.name}</h3>
