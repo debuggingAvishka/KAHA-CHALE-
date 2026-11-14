@@ -16,7 +16,6 @@ type SupabasePlaceRow = {
 }
 
 type LookupRow = { id: string; name: string; slug?: string; locality_type?: string }
-
 type SupabasePlaceImageRow = {
   place_id: string
   image_url: string
@@ -74,6 +73,7 @@ function toRegion(localityName: string | null, placeName: string): Place['region
   return 'To be verified'
 }
 
+
 export async function fetchPublishedPlaces(): Promise<Place[]> {
   const [rows, categories, localities] = await Promise.all([
     selectRows<SupabasePlaceRow>(
@@ -86,23 +86,32 @@ export async function fetchPublishedPlaces(): Promise<Place[]> {
 
   const imageRows = rows.length > 0
     ? await selectRows<SupabasePlaceImageRow>(
-        'place_images',
-        `select=place_id,image_url,attribution,source_page_url,licence&place_id=in.(${rows.map((row) => row.id).join(',')})&is_primary=eq.true&verification_status=eq.verified`,
-      )
+      'place_images',
+      `select=place_id,image_url,attribution,source_page_url,licence&place_id=in.(${rows.map((row) => row.id).join(',')})&is_primary=eq.true&verification_status=eq.verified`,
+    )
     : []
 
-  const categoryById = new Map(categories.map((item) => [item.id, item.slug ?? item.name]))
-  const localityById = new Map(localities.map((item) => [item.id, item.name]))
-  const imageByPlaceId = new Map<string, SupabasePlaceImageRow>()
-  for (const image of imageRows) {
-    if (!imageByPlaceId.has(image.place_id)) imageByPlaceId.set(image.place_id, image)
-  }
+  const categoryById = new Map(
+    categories.map((item) => [item.id, item.slug ?? item.name]),
+  )
+
+  const localityById = new Map(
+    localities.map((item) => [item.id, item.name]),
+  )
+
+  const imageByPlaceId = new Map(
+    imageRows.map((image) => [image.place_id, image]),
+  )
 
   return rows.map((row) => {
-    const locality = row.locality_id ? localityById.get(row.locality_id) ?? null : null
+    const locality = row.locality_id
+      ? localityById.get(row.locality_id) ?? null
+      : null
+
     const category = categoryById.get(row.category_id) ?? 'other'
     const area = row.area ?? row.address ?? locality ?? 'Jabalpur region'
     const image = imageByPlaceId.get(row.id)
+
     return {
       id: row.id,
       name: row.name,
@@ -122,11 +131,15 @@ export async function fetchPublishedPlaces(): Promise<Place[]> {
       interests: [],
       suitableFor: [],
       estimatedCost: row.estimated_cost_min !== null && row.estimated_cost_max !== null
-        ? { min: row.estimated_cost_min, max: row.estimated_cost_max }
+        ? {
+          min: row.estimated_cost_min,
+          max: row.estimated_cost_max,
+        }
         : null,
     }
   })
 }
+
 
 export function isFeaturedPlace(place: Place): boolean {
   return featuredNames.has(place.name)
